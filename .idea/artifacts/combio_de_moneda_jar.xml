@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="combio_de_moneda:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/combio_de_moneda_jar</output-path>
+    <root id="archive" name="combio_de_moneda.jar">
+      <element id="module-output" name="combio_de_moneda" />
+      <element id="extracted-dir" path="E:/java librery/gson-2.10.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
