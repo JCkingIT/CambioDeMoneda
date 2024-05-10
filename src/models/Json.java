@@ -5,7 +5,6 @@ import utilities.Fichero;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 public class Json {
     private String direccion;
@@ -13,6 +12,11 @@ public class Json {
     private Reader reader;
     private Gson gson;
 
+    /**
+     * Constructor Json
+     *
+     * @param nombre String nombre del archivo json
+     */
     public Json(String nombre) {
         this.nombre = nombre;
         this.direccion = "src/json/";
@@ -22,6 +26,10 @@ public class Json {
         Fichero.crearDirectorio(this.direccion);
     }
 
+    /**Metodo escribir
+     *
+     * @param json String contenido json
+     */
     public void escribirJson(String json) {
         try {
             Writer writer = new FileWriter(this.direccion + this.nombre);
@@ -32,13 +40,18 @@ public class Json {
         }
     }
 
-    public <T> T leerJson(Type type){
-        try{
-            Reader reader = new FileReader(this.direccion+this.nombre);
-            return gson.fromJson(reader,type);
+    /**Metodo leerJson
+     *
+     * @param type Type tipo de formato de estructura
+     * @return objeto del tipo que se designo por parametro (si no encuetra ningun contenido en el json retorna {@code null})
+     */
+    public <T> T leerJson(Type type) {
+        try {
+            Reader reader = new FileReader(this.direccion + this.nombre);
+            return gson.fromJson(reader, type);
         } catch (FileNotFoundException e) {
             escribirJson("[]");
-            return leerJson(type);
         }
+        return leerJson(type);
     }
 }

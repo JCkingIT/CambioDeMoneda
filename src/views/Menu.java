@@ -4,7 +4,6 @@ import controller.ListaHistorial;
 import controller.ListaMonedas;
 import models.Historial;
 import models.Moneda;
-import utilities.Fichero;
 import utilities.Numero;
 
 import java.io.*;
@@ -178,11 +177,11 @@ public class Menu {
         for (Historial historial : listaHistorial.getListaHistorial()) {
             marco('-');
             System.out.printf("%-30s%-30s%n", "Fecha: " + historial.getFecha(), "Hora: " + historial.getHora());
-            System.out.printf("%-30s%-30s%n", "Moneda base: " + historial.getMonedaBase(), "Moneda de Cambio: " + historial.getMonedaCambion());
+            System.out.printf("%-30s%-30s%n", "Moneda base: " + historial.getMonedaBase(), "Moneda de Cambio: " + historial.getMonedaCambio());
             System.out.printf("%-30s%-30s%-5s%-5s%n", "Valor de Moneda: " + historial.getValorBase(),
                     "Valor de Moneda: " + historial.getValorCambio(),
                     "->",
-                    "Converción de Moneda: " + historial.getValorFinal() + " " + historial.getMonedaCambion());
+                    "Converción de Moneda: " + historial.getValorFinal() + " " + historial.getMonedaCambio());
 //            marco('-');
         }
         marco('*');

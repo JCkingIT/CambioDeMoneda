@@ -1,6 +1,8 @@
+import confing.Configuracion;
 import controller.ConvercionMoneda;
 
 import views.Menu;
+
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +13,6 @@ public class Main {
         Menu menuMonedaCambio;
         ConvercionMoneda convercion = new ConvercionMoneda();
         int finalizar = 2;
-
 
         do {
             //Primer menú
