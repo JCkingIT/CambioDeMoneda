@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.Historial;
 import models.Json;
+import models.Moneda;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class ListaHistorial {
     private List<Historial> listaHistorial;
+    private Historial historial;
     private Gson gson;
     private Json jsonHistorial;
 
@@ -48,14 +50,14 @@ public class ListaHistorial {
     /**
      * Metodo agregar, agrega la convercion realizada
      *
-     * @param monedaBase   String nobmre de la moneda base
+     * @param monedaBase   contiene la {@code Moneda} base
      * @param valorBase    double valor de la moneda base
-     * @param monedaCambio String nombre de la moneda de canvio
-     * @param valorCambio  double valor de la moneda de canvio
+     * @param monedaCambio contiene la {@code Moneda} de cambio
+     * @param valorCambio  double valor de la moneda de cambio
      */
-    public void agregar(String monedaBase, double valorBase, String monedaCambio, double valorCambio) {
-        Historial historial = new Historial(fecha(), hora(), monedaBase, valorBase, monedaCambio, valorCambio);
-        this.listaHistorial.add(historial);
+    public void agregar(Moneda monedaBase, double valorBase, Moneda monedaCambio, double valorCambio) {
+        this.historial = new Historial(fecha(), hora(), monedaBase.getMoneda(), monedaBase.getPais(), valorBase, monedaCambio.getMoneda(), monedaCambio.getPais(), valorCambio);
+        this.listaHistorial.add(this.historial);
     }
 
     /**
@@ -65,6 +67,15 @@ public class ListaHistorial {
      */
     public List<Historial> getListaHistorial() {
         return this.listaHistorial;
+    }
+
+    /**
+     * Metodo getHistorial
+     *
+     * @return {@code Historial} mas reciente
+     */
+    public Historial getHistorial() {
+        return this.historial;
     }
 
     /**

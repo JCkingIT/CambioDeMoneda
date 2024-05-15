@@ -7,6 +7,7 @@ import models.Moneda;
 import utilities.Numero;
 
 import java.io.*;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,54 +37,69 @@ public class Menu {
         return this.monedaSeleccionado;
     }
 
-    public static int mostrarMenu() {
-        System.out.println();
-        marco();
-        System.out.printf("%-30S%-30S %n", "", "Selecciona una de las opciones para continuar");
-        marco();
-        System.out.printf("%-40s%-40s%-40s%n", "0 -> Realizar otro Cambio", "1 -> Cambiar moneda base", "2 -> Finalizar");
-        marco();
-        return scanner(3);
+    public void informacionDeMonedaSeleccionado() {
+        System.out.println("\nMoneda seleccionado: " + this.monedaSeleccionado.getMoneda() +
+                " -> " + this.monedaSeleccionado.getPais());
     }
 
-    public void mostrarMenu(String titulo) {
+    public static int menuPrincipal(int numeroOpcion) {
+        System.out.println();
+        marco();
+        System.out.printf("%-30S%-50S %n", "", "Menu principal");
+        marco();
+        System.out.printf("%-40s%-40s%-40s%n", "1 -> Tasar Converción de Moneda", "2 -> Historial", "0 -> Salir");
+        marco();
+        return scanner(numeroOpcion);
+    }
+
+    public static int menuSecundario(int numeroOpcion) {
+        System.out.println();
+        marco();
+        System.out.printf("%-40s%-40s%-40s%-40s%n", "1 -> Cambiar de moneda principal", "2 -> Realizar otra convercion","3 -> Ir al menu principal", "0 -> Salir");
+        marco();
+        return scanner(numeroOpcion);
+    }
+
+    public void mostrarMenuDeMoneda(String titulo) {
         this.grupoMonedas = listaMonedas.mostrarGrupoMonedas();
 
+        System.out.println();
         marco('*');
-        System.out.printf("%60S %n", titulo);
+        System.out.printf("%50S %40S %n", titulo,"Pg: "+listaMonedas.paginaDeGrupoMonedas());
         marco('*');
-        for (int i = 0; i < 4; i++) {
-            System.out.printf("%-60s %-60s %n", (i + 1) + "  : " + this.grupoMonedas.get(i).getMoneda() + " -> " + this.grupoMonedas.get(i).getPais(),
-                    (i + 5) + "  : " + this.grupoMonedas.get(i + 4).getMoneda() + " -> " + this.grupoMonedas.get(i + 4).getPais());
+        for (int i = 0; i < 8; i+=2) {
+                try{
+                    System.out.printf("%-60s", (i + 1) + "  : " + this.grupoMonedas.get(i).getMoneda() + " -> " + this.grupoMonedas.get(i).getPais());
+                    System.out.printf("%-60s %n",(i + 2) + "  : " + this.grupoMonedas.get(i + 1).getMoneda() + " -> " + this.grupoMonedas.get(i + 1).getPais());
+                }catch (IndexOutOfBoundsException e){
+                    break;
+                }
         }
         marco('-');
         switch (this.posicionMenu) {
             case 0:
-                System.out.printf("%-60s %-60s %n", "9  : Mostrar más", "0  : Mostrar Historial");
-                System.out.println("00 : Salir");
+                System.out.printf("%-60s %-60s %n", "9  : Mostrar más", "0  : Salir");
                 break;
             case 1:
                 System.out.printf("%-60s %-60s %n", "9  : Mostrar más", "99 : Mostrar anterior");
-                System.out.printf("%-60s %-60s %n", "0  : Mostrar Historial", "00 : Salir");
+                System.out.printf("%-60s %n", "0 : Salir");
                 break;
             case 2:
-                System.out.printf("%-40s %-40s %n", "99 : Mostrar Anterior", "0  : Mostrar Historial");
-                System.out.println("00 : Salir");
+                System.out.printf("%-40s %-40s %n", "99 : Mostrar Anterior", "0  : Salir");
                 break;
-
         }
         marco('*');
     }
 
     private static void marco() {
-        for (int i = 0; i < 110; i++) {
+        for (int i = 0; i < 150; i++) {
             System.out.print('*');
         }
         System.out.println();
     }
 
     private void marco(char signo) {
-        for (int i = 0; i < 110; i++) {
+        for (int i = 0; i < 150; i++) {
             System.out.print(signo);
         }
         System.out.println();
@@ -91,10 +107,10 @@ public class Menu {
 
     public boolean opcion() {
         boolean resultado = false;
-        String seleccion = scanner();
+        int seleccion = scanner();
 
         switch (seleccion) {
-            case "9":
+            case 9:
                 if (this.posicionMenu == 2) {
                     System.out.println("Opcion no disponible");
                     resultado = opcion();
@@ -104,7 +120,7 @@ public class Menu {
                 masOpciones();
                 resultado = true;
                 break;
-            case "99":
+            case 99:
                 if (this.posicionMenu == 0) {
                     System.out.println("¡¡¡¡Opcion no disponible!!!!");
                     resultado = opcion();
@@ -114,17 +130,12 @@ public class Menu {
                 anteriorOpciones();
                 resultado = true;
                 break;
-
-            case "0":
-                mostrarHistorial();
-                System.exit(0);
-                break;
-            case "00":
+            case 0:
                 System.exit(0);
                 break;
             default:
-                this.posicionLista = Integer.parseInt(seleccion) - 1;
-                if (!(this.posicionLista > 8)) {
+                this.posicionLista = seleccion - 1;
+                if (!(this.posicionLista > this.grupoMonedas.size()) && this.posicionLista >= 0) {
                     monedaSeleccionado = new Moneda(grupoMonedas.get(posicionLista));
                     break;
                 }
@@ -138,27 +149,38 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         int opcion;
 
-        do {
+        try {
             System.out.print(" Ingresa el numero de su opción: ");
             opcion = sc.nextInt();
-            if (!Numero.isInteger(String.valueOf(opcion))) System.out.println("Ingresa un numero");
-            if (opcion > limite - 1) System.out.println("Opción no disponible");
-        } while (!Numero.isInteger(String.valueOf(opcion)) && (opcion > limite - 1));
-
-        return opcion;
+            if (opcion > limite - 1) System.out.println("!!!!Opcion no disponible!!!!");
+            return (opcion > limite - 1) ? scanner(limite) : opcion;
+        } catch (InputMismatchException e) {
+            System.out.println("!!!!Ingresa un número!!!!");
+            return scanner(limite);
+        }
     }
 
-    private String scanner() {
+    private int scanner() {
         Scanner sc = new Scanner(System.in);
-        String opcion;
 
-        do {
+        try {
             System.out.print(" Ingresa el numero de su opción: ");
-            opcion = sc.next();
-            if (!Numero.isInteger(opcion)) System.out.println("Ingresa un numero");
-        } while (!Numero.isInteger(opcion));
+            return sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("!!!!Ingresa un número!!!!");
+            return scanner();
+        }
+    }
 
-        return opcion;
+    static public double valorDeMoneda() {
+        Scanner sc = new Scanner(System.in);
+        try {
+            System.out.print("Ingresa el valor de la moneda: ");
+            return sc.nextDouble();
+        } catch (NumberFormatException e) {
+            System.out.println("Ingresa un número valido");
+            return valorDeMoneda();
+        }
     }
 
     private void masOpciones() {
@@ -169,21 +191,31 @@ public class Menu {
         this.posicionMenu = listaMonedas.retrocederListaMonedas();
     }
 
-    private void mostrarHistorial() {
+    public void mostrarHistorial() {
         ListaHistorial listaHistorial = new ListaHistorial();
         System.out.println();
         marco('*');
         System.out.printf("%60S %n", "Historial de Comverción de moneda");
-        for (Historial historial : listaHistorial.getListaHistorial()) {
+        if (listaHistorial.getListaHistorial().isEmpty()) {
             marco('-');
-            System.out.printf("%-30s%-30s%n", "Fecha: " + historial.getFecha(), "Hora: " + historial.getHora());
-            System.out.printf("%-30s%-30s%n", "Moneda base: " + historial.getMonedaBase(), "Moneda de Cambio: " + historial.getMonedaCambio());
-            System.out.printf("%-30s%-30s%-5s%-5s%n", "Valor de Moneda: " + historial.getValorBase(),
-                    "Valor de Moneda: " + historial.getValorCambio(),
-                    "->",
-                    "Converción de Moneda: " + historial.getValorFinal() + " " + historial.getMonedaCambio());
-//            marco('-');
+            System.out.println("Historial vasio, realiza una converción para visualizar en el historial");
+        } else {
+            for (Historial historial : listaHistorial.getListaHistorial()) {
+                marco('-');
+                System.out.printf("%-50s%-50s%n", "Fecha: " + historial.getFecha(), "Hora: " + historial.getHora());
+                System.out.printf("%-50s%-50s%n", "Moneda base: ", "Moneda de Cambio: ");
+                System.out.printf("%-50s%-50s%n",
+                        historial.getMonedaBase() + " : " + historial.getMonedaBasePais(),
+                        historial.getMonedaCambio() + " : " + historial.getMonedaCambioPais());
+                System.out.printf("%-50s%-50s%-5s%-5s%n", "Valor de Moneda: " + historial.getValorBase(),
+                        "Valor de Moneda: " + historial.getValorCambio(),
+                        "->",
+                        "Converción de Moneda: " + historial.getValorFinal() + " " + historial.getMonedaCambio());
+            }
         }
         marco('*');
+        System.out.printf("%-60s%-60s%n", "1 -> Ir a menu principal", "0 -> Salir ");
+        marco('*');
+        if (scanner(2) == 0) System.exit(0);
     }
 }

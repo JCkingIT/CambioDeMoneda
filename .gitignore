@@ -30,3 +30,6 @@ bin/
 
 ### Variables de entorno ###
 .env
+
+### JSON ###
+src/json/

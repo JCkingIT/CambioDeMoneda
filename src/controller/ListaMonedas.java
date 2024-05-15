@@ -1,6 +1,5 @@
 package controller;
 
-import api.Api;
 import api.ExchangeRateApi;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -78,8 +77,13 @@ public class ListaMonedas {
      */
     public List<Moneda> mostrarGrupoMonedas() {
         List<Moneda> lista = new ArrayList<>();
-        for (int i = this.posicionDeLista; i < (this.posicionDeLista + this.grupoLista); i++)
-            lista.add(this.listaMonedas.get(i));
+        for (int i = this.posicionDeLista; i < (this.posicionDeLista + this.grupoLista); i++) {
+            try {
+                lista.add(this.listaMonedas.get(i));
+            } catch (IndexOutOfBoundsException e) {
+                break;
+            }
+        }
         return lista;
     }
 
@@ -92,7 +96,7 @@ public class ListaMonedas {
      */
     public int siguienteListaMonedas() {
         this.posicionDeLista += (this.posicionDeLista < this.listaMonedas.size()) ? this.grupoLista : 0;
-        return (this.posicionDeLista < this.listaMonedas.size()) ? 1 : 2;
+        return ((this.posicionDeLista + 8) < this.listaMonedas.size()) ? 1 : 2;
     }
 
     /**
@@ -105,5 +109,13 @@ public class ListaMonedas {
     public int retrocederListaMonedas() {
         this.posicionDeLista -= (this.posicionDeLista > 0) ? this.grupoLista : 0;
         return (this.posicionDeLista > 0) ? 1 : 0;
+    }
+
+    /**
+     * Metodo getPosicionDeLista
+     * @return {@code int} posición donde se encuentra.
+     */
+    public int paginaDeGrupoMonedas() {
+        return (this.posicionDeLista / this.grupoLista) + 1;
     }
 }

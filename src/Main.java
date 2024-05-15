@@ -1,46 +1,53 @@
-import confing.Configuracion;
 import controller.ConvercionMoneda;
-
 import views.Menu;
-
-import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Menu menuMonedaActual = new Menu();
-        Menu menuMonedaCambio;
+        Menu menu = new Menu();
         ConvercionMoneda convercion = new ConvercionMoneda();
-        int finalizar = 2;
+        int finalizar = 0;
+
 
         do {
-            //Primer menú
-            if (finalizar != 0) menuMonedaActual = new Menu(menuDeOpciones("Seleccione su moneda"));
+            finalizar = Menu.menuPrincipal(3);
 
-            //Información de la moneda base seleccionado
-            System.out.println("\nMoneda seleccionado: " + menuMonedaActual.getMonedaSeleccionado().getMoneda() +
-                    " -> " + menuMonedaActual.getMonedaSeleccionado().getPais());
-            //valor de la moneda base
-            System.out.print("valor de Moneda: ");
-            double valorDeMoneda = sc.nextDouble();
-            System.out.println();
+            switch (finalizar) {
+                case 0:
+                    System.out.println("Saliendo,");
+                    break;
+                case 1:
+                    do {
+                        //Primer menú
+                        if (finalizar == 1) menu = new Menu(menuDeOpciones("Seleccione su moneda"));
 
-            //Segundo menú
-            menuMonedaCambio = new Menu(menuDeOpciones("Seleccionar Moneda para Tasar el Cambio"));
+                        //Información de la moneda base seleccionado
+                        if (finalizar == 2) convercion.verMonedaActual();
+                        else menu.informacionDeMonedaSeleccionado();
 
-            //Convercion de moneda
-            convercion.tasarConvercion(menuMonedaActual.getMonedaSeleccionado().getMoneda(), menuMonedaCambio.getMonedaSeleccionado().getMoneda(), valorDeMoneda);
+                        convercion.setMonedaActual(((finalizar != 2)?menu.getMonedaSeleccionado():convercion.getMonedaActual()), Menu.valorDeMoneda());
+                        //Segundo menú
+                        menu = new Menu(menuDeOpciones("Seleccionar Moneda para Tasar el Cambio"));
 
-            finalizar = Menu.mostrarMenu();
-        } while (finalizar != 2);
+                        //Convercion de moneda
+                        convercion.tasarConvercion(menu.getMonedaSeleccionado());
+                        convercion.verHistorialActual();
+                        finalizar = Menu.menuSecundario(4);
+                        if(finalizar == 3) break;
+                    } while (finalizar != 0);
+                    break;
+                case 2:
+                    menu.mostrarHistorial();
+                    break;
+            }
+        } while (finalizar != 0);
     }
 
     static Menu menuDeOpciones(String mensaje) {
         Menu menu = new Menu();
 
         do {
-            menu.mostrarMenu(mensaje);
+            menu.mostrarMenuDeMoneda(mensaje);
         } while (menu.opcion());
 
         return menu;

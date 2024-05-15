@@ -6,8 +6,10 @@ public class Historial {
     private String fecha;
     private String hora;
     private String monedaBase;
+    private String monedaBasePais;
     private double valorBase;
     private String monedaCambio;
+    private String monedaCambioPais;
     private double valorCambio;
     private double valorFinal;
 
@@ -17,19 +19,23 @@ public class Historial {
     /**
      * Constructor Historial
      *
-     * @param fecha         String fecha en que se realizo el cambio
-     * @param hora          String hora en que se realizo el cambio
-     * @param monedaBase    String nombre de la moneda
-     * @param valorBase     double valor de la moneda
-     * @param monedaCambion String nombre de la moneda de cambion
-     * @param valorCambio   double valor de la moneda de cambio
+     * @param fecha             String fecha en que se realizo el cambio
+     * @param hora              String hora en que se realizo el cambio
+     * @param monedaBase        String nombre de la moneda
+     * @param monedaBasePais    String nombre del país de la moneda
+     * @param valorBase         double valor de la moneda
+     * @param monedaCambion     String nombre de la moneda de cambion
+     * @param monedaCambionPais String nombre del país de la moneda de cambion
+     * @param valorCambio       double valor de la moneda de cambio
      */
-    public Historial(String fecha, String hora, String monedaBase, double valorBase, String monedaCambion, double valorCambio) {
+    public Historial(String fecha, String hora, String monedaBase, String monedaBasePais, double valorBase, String monedaCambion, String monedaCambionPais, double valorCambio) {
         this.fecha = fecha;
         this.hora = hora;
         this.monedaBase = monedaBase;
+        this.monedaBasePais = monedaBasePais;
         this.valorBase = Numero.decimalFormat(valorBase);
         this.monedaCambio = monedaCambion;
+        this.monedaCambioPais = monedaCambionPais;
         this.valorCambio = Numero.decimalFormat(valorCambio);
         this.valorFinal = Numero.decimalFormat(valorFinalMoneda(this.valorBase, this.valorCambio));
     }
@@ -59,6 +65,24 @@ public class Historial {
      */
     public void setMonedaBase(String monedaBase) {
         this.monedaBase = monedaBase;
+    }
+
+    /**
+     * Metodo getMonedaBase
+     *
+     * @return {@code String} nombre del pais de la moneda
+     */
+    public String getMonedaBasePais() {
+        return monedaBasePais;
+    }
+
+    /**
+     * Metodo setMonedaBase
+     *
+     * @param monedaBasePais String nombre del país de la moneda
+     */
+    public void setMonedaBasePais(String monedaBasePais) {
+        this.monedaBase = monedaBasePais;
     }
 
     /**
@@ -113,6 +137,24 @@ public class Historial {
      */
     public void setMonedaCambio(String monedaCambio) {
         this.monedaCambio = monedaCambio;
+    }
+
+    /**
+     * Metodo getMonedaCambio
+     *
+     * @return {@code double} nombre del país de la moneda de cambio
+     */
+    public String getMonedaCambioPais() {
+        return monedaCambioPais;
+    }
+
+    /**
+     * Metodo setMonedaCambio
+     *
+     * @param monedaCambioPais String nombre del país de la moneda de cambio
+     */
+    public void setMonedaCambioPais(String monedaCambioPais) {
+        this.monedaCambioPais = monedaCambioPais;
     }
 
     /**

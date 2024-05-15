@@ -15,11 +15,17 @@ public class Configuracion {
         try {
             reader = new File("src/.env");
             Scanner sc = new Scanner(reader);
-            String api = sc.nextLine();
 
-            if (index != 0) api = sc.nextLine();
-            else index++;
-            return api.substring(8);
+            String [] env =  sc.nextLine().split("=");
+
+            if (index != 0) {
+                env = sc.nextLine().split("=");
+                return (env[0].equals("API_KEY"))? env[1]:"";
+            }
+            else {
+                index++;
+                return (env[0].equals("API_URL"))? env[1]:"";
+            }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

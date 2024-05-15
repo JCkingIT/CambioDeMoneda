@@ -1,6 +1,7 @@
 package api;
 
 import confing.Configuracion;
+import exepcions.ExepcionApi;
 
 public class ExchangeRateApi extends Api {
 
@@ -9,8 +10,8 @@ public class ExchangeRateApi extends Api {
      * inicializa las variables {@code url} y {@code key} desde el .env para realizar las consultas respectivas a la API
      */
     public ExchangeRateApi() {
-        url = Configuracion.apiUrl;
-        key = Configuracion.apiKey;
+        this.url = Configuracion.apiUrl;
+        this.key = Configuracion.apiKey;
     }
 
     /**
@@ -19,8 +20,9 @@ public class ExchangeRateApi extends Api {
      * @return {@code json} String lista de monedas
      */
     public String consultarMonedas() {
-        String url = this.url + this.key + "/codes";
-        return consultar(url);
+        String json = consultar(this.url + this.key + "/codes");
+        if(ExepcionApi.verificacion(json)) System.exit(0);
+        return json;
     }
 
     /**
@@ -31,7 +33,9 @@ public class ExchangeRateApi extends Api {
      * @return {@code json} String valor de moneda de comverción
      */
     public String consultarCambio(String monedaActula, String monedaCambio) {
-        String url = this.url + this.key + "/pair/" + monedaActula + "/" + monedaCambio;
-        return consultar(url);
+        String json = consultar(this.url + this.key + "/pair/" + monedaActula + "/" + monedaCambio);;
+
+        if(ExepcionApi.verificacion(json)) System.exit(0);
+        return json;
     }
 }
