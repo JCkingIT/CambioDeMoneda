@@ -8,7 +8,6 @@ public class Main {
         ConvercionMoneda convercion = new ConvercionMoneda();
         int finalizar = 0;
 
-
         do {
             finalizar = Menu.menuPrincipal(3);
 

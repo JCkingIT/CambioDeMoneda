@@ -1,7 +1,7 @@
 package exepcions;
 
 import com.google.gson.Gson;
-import confing.Configuracion;
+import config.Configuracion;
 import records.ErrorApi;
 
 public class ExepcionApi {

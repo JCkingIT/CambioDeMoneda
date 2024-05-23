@@ -1,6 +1,6 @@
 package api;
 
-import confing.Configuracion;
+import config.Configuracion;
 import exepcions.ExepcionApi;
 
 public class ExchangeRateApi extends Api {
