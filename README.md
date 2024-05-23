@@ -31,38 +31,44 @@ API_KEY=KEY-PERSONAL
 5. Para ejecutar el programa uvicatse en el archivo `Main.java`  y RUN BUILD.
 
 ## Qué incluye el proyecto
-- src
-  - API
-    - Api.java
-    - ExchangeRateApi.java
-  - config
-    - Configuracion.java
-  - controller
-    - ConvercionMoneda.java
-    - ListaMoneda.java
-    - ListaHistorial.java
-  - exepcions
-    - ExepcionApi.java
-  - models
-    - Moneda.java
-    - Historial.java
-  - records
-    - CambioEr.java
-    - ErrorApi.java
-    - MonedaEr.java
-  - utilities
-  	- Fichero.java
-  	- Numero.java
-  - views
-    - Menu.java
-  - Mian.java
-- .env.example
-
+```
+.
+|-- src
+|   |-- API
+|   |   |-- Api.java
+|   |   `-- ExchangeRateApi.java
+|   |-- config
+|   |    `-- Configuracion.java
+|   |-- controller
+|   |   |-- ConvercionMoneda.java
+|   |   |-- ListaMoneda.java
+|   |   `-- ListaHistorial.java
+|   |-- exepcions
+|   |   `-- ExepcionApi.java
+|   |-- models
+|   |   |-- Moneda.java
+|   |   `-- Historial.java
+|   |-- records
+|   |   |-- CambioEr.java
+|   |   |-- ErrorApi.java
+|   |   `-- MonedaEr.java
+|   |-- utilities
+|   |   |-- Fichero.java
+|   |   `-- Numero.java
+|   |-- views
+|   |   `-- Menu.java
+|   `-- Mian.java
+`-- .env.example
+```
 Al ejecutar el programa por primera ves se creara dos archivos `JSON`
-- src
-	- json
-		- listaMoneda.json
-		- listaHistorial.json
+```
+.
+|-- src
+|   `-- json
+|       |-- listaMoneda.json
+|       `-- listaHistorial.json
+...
+```
 
 ## Demostración
 - Menu principal con tres opciones.
