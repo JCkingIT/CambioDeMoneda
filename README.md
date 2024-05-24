@@ -28,7 +28,7 @@ cp .env.example .env
 API_URL=https://v6.exchangerate-api.com/v6/
 API_KEY=KEY-PERSONAL
 ```
-5. Para ejecutar el programa uvicatse en el archivo `Main.java`  y RUN.
+5. Para ejecutar el programa uvicase en el archivo `Main.java`  y a ejecutar.
 
 ## Qué incluye el proyecto
 ```
