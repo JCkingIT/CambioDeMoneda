@@ -16,9 +16,9 @@ Programa que realiza conversiones de monedas y guarda un historial de las conver
 La instalación y ejecucion es super sencilla solo sigue los pasos acontinuación.
 1. Clonar el repositorio.
 ```bash
-git clone 'repo'
+git clone https://github.com/JCkingIT/CambioDeMoneda.git
 ```
-2. Instalar dependencias.
+2. Verificar si se tiene instalado las librerias nesesarias (Gson, Detenv), verificar las [Tecnologias](#Tecnologias) usadas.
 3. Copiamos el archivo .env.example con el nombre .env o tambien lo puedes copiar manualmente (si es que no tienes el archivo .env).
 ```bash
 cp .env.example .env
@@ -28,7 +28,7 @@ cp .env.example .env
 API_URL=https://v6.exchangerate-api.com/v6/
 API_KEY=KEY-PERSONAL
 ```
-5. Para ejecutar el programa uvicatse en el archivo `Main.java`  y RUN BUILD.
+5. Para ejecutar el programa uvicatse en el archivo `Main.java`  y RUN.
 
 ## Qué incluye el proyecto
 ```
